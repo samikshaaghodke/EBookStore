@@ -40,6 +40,7 @@ namespace BookShoppingCartMvcUI.Controllers
                 Genres = genres,
                 STerm = sterm,
                 GenreId = genreId
+
             };
             return View(bookModel);
         }
