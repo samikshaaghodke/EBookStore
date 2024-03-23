@@ -45,7 +45,7 @@ namespace BookShoppingCartMvcUI.Controllers
             return View(bookModel);
         }
 
-        public IActionResult Return()
+        public IActionResult ReturnPolicy()
         {
             return View();
         }

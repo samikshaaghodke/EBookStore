@@ -8,15 +8,18 @@ namespace BookShoppingCartMvcUI.Repositories
     {
         private readonly ApplicationDbContext _db;
 
-        public HomeRepository(ApplicationDbContext db)
+        public HomeRepository(ApplicationDbContext db) //to connect to database service
         {
             _db = db;
         }
 
+        //To get list of Genres
         public async Task<IEnumerable<Genre>> Genres()
         {
             return await _db.Genres.ToListAsync();
         }
+
+        //Gets filtered list of books based on Search Term
         public async Task<IEnumerable<Book>> GetBooks(string sTerm = "", int genreId = 0)
         {
             sTerm = sTerm.ToLower();
@@ -37,11 +40,9 @@ namespace BookShoppingCartMvcUI.Repositories
                          ).ToListAsync();
             if (genreId > 0)
             {
-
                 books = books.Where(a => a.GenreId == genreId).ToList();
             }
             return books;
-
         }
     }
 }

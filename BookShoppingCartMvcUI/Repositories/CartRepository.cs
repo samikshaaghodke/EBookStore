@@ -8,14 +8,14 @@ namespace BookShoppingCartMvcUI.Repositories
     {
         private readonly ApplicationDbContext _db;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor; //to access the current request context.
 
         public CartRepository(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor,
             UserManager<IdentityUser> userManager)
         {
             _db = db;
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager; //to get user id
+            _httpContextAccessor = httpContextAccessor; 
         }
         public async Task<int> AddItem(int bookId, int qty)
         {
@@ -34,7 +34,7 @@ namespace BookShoppingCartMvcUI.Repositories
                     };
                     _db.ShoppingCarts.Add(cart);
                 }
-                _db.SaveChanges();
+                _db.SaveChanges(); // for reflecting changes in db
                 // cart detail section
                 var cartItem = _db.CartDetails
                                   .FirstOrDefault(a => a.ShoppingCartId == cart.Id && a.BookId == bookId);
@@ -50,7 +50,7 @@ namespace BookShoppingCartMvcUI.Repositories
                         BookId = bookId,
                         ShoppingCartId = cart.Id,
                         Quantity = qty,
-                        UnitPrice = book.Price  // it is a new line after update
+                        UnitPrice = book.Price  
                     };
                     _db.CartDetails.Add(cartItem);
                 }
@@ -59,15 +59,14 @@ namespace BookShoppingCartMvcUI.Repositories
             }
             catch (Exception ex)
             {
+                transaction.Rollback();
+                throw;              
             }
             var cartItemCount = await GetCartItemCount(userId);
             return cartItemCount;
         }
-
-
         public async Task<int> RemoveItem(int bookId)
         {
-            //using var transaction = _db.Database.BeginTransaction();
             string userId = GetUserId();
             try
             {
@@ -89,12 +88,11 @@ namespace BookShoppingCartMvcUI.Repositories
             }
             catch (Exception ex)
             {
-
+                throw;
             }
             var cartItemCount = await GetCartItemCount(userId);
             return cartItemCount;
         }
-
         public async Task<ShoppingCart> GetUserCart()
         {
             var userId = GetUserId();
@@ -113,22 +111,20 @@ namespace BookShoppingCartMvcUI.Repositories
             var cart = await _db.ShoppingCarts.FirstOrDefaultAsync(x => x.UserId == userId);
             return cart;
         }
-
         public async Task<int> GetCartItemCount(string userId = "")
         {
-            if (string.IsNullOrEmpty(userId)) // updated line
+            if (string.IsNullOrEmpty(userId)) 
             {
                 userId = GetUserId();
             }
             var data = await (from cart in _db.ShoppingCarts
                               join cartDetail in _db.CartDetails
                               on cart.Id equals cartDetail.ShoppingCartId
-                              where cart.UserId==userId // updated line
+                              where cart.UserId==userId 
                               select new { cartDetail.Id }
                         ).ToListAsync();
             return data.Count;
         }
-
         public async Task<bool> DoCheckout()
         {
             using var transaction = _db.Database.BeginTransaction();
@@ -179,7 +175,6 @@ namespace BookShoppingCartMvcUI.Repositories
                 return false;
             }
         }
-
         private string GetUserId()
         {
             var principal = _httpContextAccessor.HttpContext.User;

@@ -1,8 +1,8 @@
-﻿@model ShoppingCart
+﻿@model ShoppingCart 
 @{
     ViewData["Title"] = "GetUserCart";
 }
-
+@* Bind model to View *@
 <div style="width:90%;margin:auto" class="mt-2">
     @if (Model != null && Model.CartDetails != null && Model.CartDetails.Count > 0)
     {
@@ -36,7 +36,7 @@
                     <td>@(item.Book.Price * item.Quantity)</td>
                     <td>
                         <a class="btn btn-info" href="/Cart/AddItem?bookId=@item.BookId&&redirect=1">+</a>
-                        <a class="btn btn-info" href="/cart/removeitem?bookid=@item.BookId">-</a>
+                        <a class="btn btn-info" href="/Cart/RemoveItem?bookid=@item.BookId">-</a>
                     </td>
                 </tr>
             }

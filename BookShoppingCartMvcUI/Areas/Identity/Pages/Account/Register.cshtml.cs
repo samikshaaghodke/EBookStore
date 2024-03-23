@@ -121,8 +121,8 @@ namespace BookShoppingCartMvcUI.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    // assing role to user
-                     await _userManager.AddToRoleAsync(user, Roles.User.ToString());
+                
+                     await _userManager.AddToRoleAsync(user, Roles.User.ToString());     // assing role to user
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
