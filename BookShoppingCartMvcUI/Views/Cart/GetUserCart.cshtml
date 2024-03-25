@@ -33,7 +33,7 @@
                     </td>
                     <td>@item.Book.Genre.GenreName</td>
                     <td>@item.Book.Price X @item.Quantity</td>
-                    <td>@(item.Book.Price * item.Quantity)</td>
+                    <td>@(item.Book.Price * item.Quantity)€</td>
                     <td>
                         <a class="btn btn-info" href="/Cart/AddItem?bookId=@item.BookId&&redirect=1">+</a>
                         <a class="btn btn-info" href="/Cart/RemoveItem?bookid=@item.BookId">-</a>
@@ -43,18 +43,22 @@
         </table>
 
         <div class="my-2">
-            <h5>Total(EUR): </h5>
+            <h4>Total:
             @(Model.CartDetails.Select(item => item.Book.Price * item.Quantity).Sum())
+             €
+            </h4>
         </div>
 
         <div class="my-2">
-            <a class="btn btn-primary" href="/Cart/Checkout">Checkout</a>
-        </div>
-
+            <a class="btn btn-primary" href=" /Cart/Checkout">Checkout</a>           
+        </div>    
     }
     else
     {
         <h5>Cart is empty</h5>
     }
+
 </div>
+
+
 
