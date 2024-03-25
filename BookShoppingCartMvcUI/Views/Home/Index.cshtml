@@ -19,7 +19,7 @@
             <label class="visually-hidden" for="sterm">Search by title</label>
             <div class="input-group">
                 <div class="input-group-text"></div>
-                <input type="text" class="form-control" value="@Model.STerm" id="sterm" name="sterm" placeholder="Sarch by title">
+                <input type="text" class="form-control" value="@Model.STerm" id="sterm" name="sterm" placeholder="Sarch by Book Title">
             </div>
         </div>
 
@@ -55,7 +55,9 @@
     }
 </div>
 
-@section Scripts{
+@* Client side JS code using Ajax. It handles the asynchronous addition of books to the cart and updating the cart count displayed on the page. *@
+@section Scripts
+{
     <script>
         async function add(bookId)
         {
@@ -71,7 +73,7 @@
                     var result = await response.json();
                     var cartCountEl = document.getElementById("cartCount");
                     cartCountEl.innerHTML = result;
-                    window.location.href = "#cartCount";
+                    window.location.href = "#cartCount"; /* used for scrolling the page to a cartCount id */
                 }
             }
             catch (err) 

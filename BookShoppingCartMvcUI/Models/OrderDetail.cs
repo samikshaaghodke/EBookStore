@@ -9,10 +9,10 @@ namespace BookShoppingCartMvcUI.Models
         public int Id { get; set; }
 
         [Required]
-        public int OrderId { get; set; }
+        public int OrderId { get; set; } //FK
 
         [Required]
-        public int BookId { get; set; }
+        public int BookId { get; set; } //FK
 
         [Required]
         public int Quantity { get; set; }

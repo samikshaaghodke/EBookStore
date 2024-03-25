@@ -19,7 +19,7 @@ namespace BookShoppingCartMvcUI.Repositories
             return await _db.Genres.ToListAsync();
         }
 
-        //Gets filtered list of books based on Search Term
+        //Gets filtered list of books based on Search Term and Genre
         public async Task<IEnumerable<Book>> GetBooks(string sTerm = "", int genreId = 0)
         {
             sTerm = sTerm.ToLower();

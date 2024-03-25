@@ -6,7 +6,7 @@ namespace BookShoppingCartMvcUI.Data
 {
     public class DbSeeder
     {
-        public static async Task SeedDefaultData(IServiceProvider service) // Seeds default values
+        public static async Task SeedDefaultData(IServiceProvider service) // Seeds default values/initial data
         {
             var userMgr = service.GetService<UserManager<IdentityUser>>(); //managing user
             var roleMgr = service.GetService<RoleManager<IdentityRole>>(); //managing role

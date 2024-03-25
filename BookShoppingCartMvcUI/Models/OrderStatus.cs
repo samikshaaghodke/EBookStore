@@ -6,7 +6,7 @@ namespace BookShoppingCartMvcUI.Models
     [Table("OrderStatus")]
     public class OrderStatus
     {
-        public int Id { get; set; }
+        public int Id { get; set; } //PK
 
         [Required]
         public int StatusId { get; set; }

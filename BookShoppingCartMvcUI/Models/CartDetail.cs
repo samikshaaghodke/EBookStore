@@ -6,13 +6,13 @@ namespace BookShoppingCartMvcUI.Models
     [Table("CartDetail")]
     public class CartDetail
     {
-        public int Id { get; set; }
+        public int Id { get; set; } //PK
 
         [Required]
-        public int ShoppingCartId { get; set; }
+        public int ShoppingCartId { get; set; } //FK
 
         [Required]
-        public int BookId { get; set; }
+        public int BookId { get; set; } //FK
 
         [Required]
         public int Quantity { get; set; }

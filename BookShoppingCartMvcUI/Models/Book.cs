@@ -22,13 +22,13 @@ namespace BookShoppingCartMvcUI.Models
         public string? Image { get; set; }
 
         [Required]
-        public int GenreId { get; set; }
+        public int GenreId { get; set; } //FK
 
         public Genre Genre { get; set; }
 
-        public List<OrderDetail> OrderDetail { get; set; }
+        public List<OrderDetail> OrderDetail { get; set; } //one to many relationship between book and OrderDetail
 
-        public List<CartDetail> CartDetail { get; set; }
+        public List<CartDetail> CartDetail { get; set; }//one to many relationship between book and CartDetail
 
         [NotMapped]
         public string GenreName { get; set; }

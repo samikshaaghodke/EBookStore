@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace BookShoppingCartMvcUI.Repositories
 {
     public class CartRepository : ICartRepository
     {
-        private readonly ApplicationDbContext _db;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _db;//for db operations
+        private readonly UserManager<IdentityUser> _userManager;//to get user id
         private readonly IHttpContextAccessor _httpContextAccessor; //to access the current request context.
 
         public CartRepository(ApplicationDbContext db, IHttpContextAccessor httpContextAccessor,
             UserManager<IdentityUser> userManager)
         {
             _db = db;
-            _userManager = userManager; //to get user id
+            _userManager = userManager; 
             _httpContextAccessor = httpContextAccessor; 
         }
         public async Task<int> AddItem(int bookId, int qty)
@@ -60,7 +59,7 @@ namespace BookShoppingCartMvcUI.Repositories
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw;              
+                throw new Exception("Failed to add item to the cart.", ex);              
             }
             var cartItemCount = await GetCartItemCount(userId);
             return cartItemCount;
@@ -88,7 +87,7 @@ namespace BookShoppingCartMvcUI.Repositories
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception("Failed to remove item from the cart.", ex);
             }
             var cartItemCount = await GetCartItemCount(userId);
             return cartItemCount;
@@ -129,8 +128,7 @@ namespace BookShoppingCartMvcUI.Repositories
         {
             using var transaction = _db.Database.BeginTransaction();
             try
-            {
-                // logic
+            {                
                 // move data from cartDetail to order and order detail then we will remove cart detail
                 var userId = GetUserId();
                 if (string.IsNullOrEmpty(userId))
@@ -169,10 +167,10 @@ namespace BookShoppingCartMvcUI.Repositories
                 transaction.Commit();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return false;
+                transaction.Rollback();
+                throw new Exception("Failed to process checkout.", ex);
             }
         }
         private string GetUserId()
@@ -181,7 +179,6 @@ namespace BookShoppingCartMvcUI.Repositories
             string userId = _userManager.GetUserId(principal);
             return userId;
         }
-
 
     }
 }
