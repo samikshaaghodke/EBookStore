@@ -81,7 +81,7 @@ namespace BookShoppingCartMvcUI.Controllers
                 bool isCheckedOut = await _cartRepo.DoCheckout();
                 if (!isCheckedOut)
                     throw new Exception("Something happened at the server side.");
-                return RedirectToAction("Index", "Home");
+                 return RedirectToAction("UserOrders", "UserOrder");
             }
             catch (Exception ex)
             {

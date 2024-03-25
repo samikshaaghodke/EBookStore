@@ -50,9 +50,9 @@
         </div>
 
         <div class="my-2">
-            <a class="btn btn-primary" href="/Cart/Checkout" id="checkoutBtn">Checkout</a>
+            <a class="btn btn-primary" href="/Cart/Checkout">Checkout</a>
         </div>
-        <div id="checkoutMessageContainer"></div>
+        
     }
     else
     {
@@ -60,17 +60,6 @@
     }
 
 </div>
-@section scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Attach click event listener to checkout button
-        $(document).on('click', '#checkoutBtn', function () {
-            setTimeout(function () {
-                $('#checkoutMessageContainer').html('<p>Order placed successfully!</p>');
-            }, 500); // Delay message to ensure successful checkout
-        });
-    </script>
-}
 
 
 
