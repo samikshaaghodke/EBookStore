@@ -1,11 +1,14 @@
 ﻿using BookShoppingCartMvcUI.Models;
 using BookShoppingCartMvcUI.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace BookShoppingCartMvcUI.Controllers
 {
+
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,21 +20,9 @@ namespace BookShoppingCartMvcUI.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index(string sterm = "", int genreId = 0, string returnUrl =null)
+        public async Task<IActionResult> Index(string sterm = "", int genreId = 0)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
-          
-            if (!User.Identity.IsAuthenticated)
-            {
-                // Construct the root-relative path to the Login page
-                string loginUrl = Url.Content("~/Identity/Account/Login");
-
-                // Redirect to the login page
-                return Redirect($"{loginUrl}?ReturnUrl={Uri.EscapeDataString(returnUrl)}");
-            }
-
-            // If authenticated, proceed with the normal logic for the Index action
-
+            
             IEnumerable<Book> books = await _homeRepository.GetBooks(sterm, genreId);
             IEnumerable<Genre> genres = await _homeRepository.Genres();
             BookDisplayModel bookModel = new BookDisplayModel
