@@ -16,19 +16,25 @@ namespace BookShoppingCartMvcUI.Controllers
             _cartRepo = cartRepo;
         }
 
+     
         public async Task<IActionResult> AddItem(int bookId, int qty = 1, int redirect = 0)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    // Handle invalid model state, perhaps by returning a BadRequest response
+                    return BadRequest(ModelState);
+                }
                 var cartCount = await _cartRepo.AddItem(bookId, qty);
                 if (redirect == 0)
                     return Ok(cartCount);
-                return RedirectToAction("GetUserCart"); // Redirects to Cart View
+                return RedirectToAction(nameof(GetUserCart)); // Redirects to Cart View
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while adding an item to the cart.");
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction(nameof(HomeController.Error), nameof(HomeController));
             }
         }
 
@@ -37,12 +43,12 @@ namespace BookShoppingCartMvcUI.Controllers
             try
             {
                 var cartCount = await _cartRepo.RemoveItem(bookId);
-                return RedirectToAction("GetUserCart");
+                return RedirectToAction(nameof(GetUserCart));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while removing an item from the cart.");
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction(nameof(HomeController.Error), nameof(HomeController));
             }
         }
 
@@ -56,7 +62,7 @@ namespace BookShoppingCartMvcUI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while retrieving the user's cart.");
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction(nameof(HomeController.Error), nameof(HomeController));
             }
         }
 
@@ -70,7 +76,7 @@ namespace BookShoppingCartMvcUI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while getting the total count of items in the cart.");
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction(nameof(HomeController.Error), nameof(HomeController));
             }
         }
 
@@ -81,12 +87,12 @@ namespace BookShoppingCartMvcUI.Controllers
                 bool isCheckedOut = await _cartRepo.DoCheckout();
                 if (!isCheckedOut)
                     throw new Exception("Something happened at the server side.");
-                 return RedirectToAction("UserOrders", "UserOrder");
+                return RedirectToAction(nameof(UserOrderController.UserOrders), nameof(UserOrderController));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while checking out.");
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction(nameof(HomeController.Error), nameof(HomeController));
             }
         }
     }

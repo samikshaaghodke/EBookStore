@@ -38,7 +38,7 @@ namespace BookShoppingCartMvcUI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while fetching books or genres.");
-                return RedirectToAction("Error");
+                return RedirectToAction(nameof(Error));
             }
           
         }

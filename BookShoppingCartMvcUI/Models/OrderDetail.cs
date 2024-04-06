@@ -20,7 +20,7 @@ namespace BookShoppingCartMvcUI.Models
         [Required]
         public double UnitPrice { get; set; }
 
-        public Order Order { get; set; }
+        public Order Order { get; set; } //navigation property
 
         public Book Book { get; set; }
     }

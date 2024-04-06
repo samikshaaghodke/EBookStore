@@ -1,0 +1,33 @@
+﻿@model BookViewModel
+
+@{
+    ViewData["Title"] = "Add Book";
+}
+
+<h2>@ViewData["Title"]</h2>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-action="AddBook" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="BookName" class="form-label">Book Name</label>
+        <input asp-for="BookName" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="AuthorName" class="form-label">Author Name</label>
+        <input asp-for="AuthorName" class="form-control" required />        
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Price</label>
+        <input asp-for="Price" class="form-control" type="number" required />
+    </div>
+   
+    <div class="mb-3">
+        <label asp-for="GenreId" class="form-label">Genre</label>
+        <select asp-for="GenreId" asp-items="@ViewBag.GenreId" class="form-control" required></select>        
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Book</button>
+    <a asp-action="ManageBooks" class="btn btn-secondary">Back to List</a>
+</form>
+

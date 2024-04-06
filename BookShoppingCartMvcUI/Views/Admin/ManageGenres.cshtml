@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Genre>
+
+<h2>Manage Genres</h2>
+
+<div class="mb-3">
+    <a href="/Admin/AddGenre" class="btn btn-primary">Add New Genre</a>
+</div>
+
+@foreach (var genre in Model)
+{
+    <div class="card my-2">
+        <div class="card-body">
+            <h5 class="card-title">@genre.GenreName</h5>
+            <a href="/Admin/EditGenre/@genre.Id" class="btn btn-primary">Edit</a>
+        </div>
+    </div>
+}

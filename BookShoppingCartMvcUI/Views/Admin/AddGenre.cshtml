@@ -1,0 +1,15 @@
+﻿@model GenreViewModel
+
+<h2>Add Genre</h2>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-action="AddGenre" method="post" class="my-4">
+    <div class="mb-3">
+        <label for="genreName" class="form-label">Genre Name:</label>
+        <!-- Bind input to the model property using asp-for -->
+        <input type="text" id="genreName" asp-for="GenreName" class="form-control" required />        
+    </div>    
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary me-2">Submit</button>
+        <a asp-action="ManageGenres" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>

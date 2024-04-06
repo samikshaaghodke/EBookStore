@@ -26,7 +26,7 @@ namespace BookShoppingCartMvcUI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while retrieving user orders.");
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction(nameof(HomeController.Error), nameof(HomeController));
             }
         }
     }

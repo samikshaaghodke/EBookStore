@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServer(connectionString));
@@ -21,7 +20,9 @@ builder.Services
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IHomeRepository,HomeRepository>(); //register as service so that we can use DI functionality for IHomeRepository and resolve dependencies
 builder.Services.AddTransient<ICartRepository,CartRepository>();
+builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 builder.Services.AddTransient<IUserOrderRepository,UserOrderRepository>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope()) // Added to create admin  role

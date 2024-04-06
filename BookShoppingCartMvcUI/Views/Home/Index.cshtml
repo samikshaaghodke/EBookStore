@@ -1,11 +1,9 @@
 ﻿@model BookDisplayModel
-@{
 
-}
 <div class="my-2">
     <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
         <div class="col-12">
-            <label class="visually-hidden" for="genreId">Genres</label>
+            <label class="visually-hidden" for="genreId">Genres</label> @* accessible to screen readers. *@
             <select class="form-select" id="genreId" name="genreId">
                 <option selected>Genre</option>
                 @foreach (var genre in Model.Genres)

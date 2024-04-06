@@ -11,7 +11,7 @@ namespace BookShoppingCartMvcUI.Data
             var userMgr = service.GetService<UserManager<IdentityUser>>(); //managing user
             var roleMgr = service.GetService<RoleManager<IdentityRole>>(); //managing role
 
-            //adding some roles to db
+            //adding some roles to db or seed roles
             await roleMgr.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
             await roleMgr.CreateAsync(new IdentityRole(Roles.User.ToString()));
 
