@@ -8,6 +8,6 @@
     Task<Book> GetBookByIdAsync(int id);
     Task<bool> AddBookAsync(Book book);
     Task UpdateBookAsync(Book book);
-    Task<bool> BookExistsAsync(string bookName, string authorName, int genreId, int? excludeBookId = null);
+    Task<bool> BookExistsAsync(string bookName, string authorName, int genreId);
 
 }

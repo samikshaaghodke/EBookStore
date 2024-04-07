@@ -10,7 +10,6 @@ namespace BookShoppingCartMvcUI.Data
             : base(options)
         {
         }
-
         public DbSet<Genre> Genres { get; set; } //represents table Genre in database
         public DbSet<Book> Books { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }

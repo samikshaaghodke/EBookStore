@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace BookShoppingCartMvcUI.Controllers
 {
@@ -15,6 +14,8 @@ namespace BookShoppingCartMvcUI.Controllers
         {
             _adminRepository = adminRepository;
         }
+
+        // For the genre-related actions:
 
         public async Task<IActionResult> ManageGenres()
         {
@@ -57,7 +58,6 @@ namespace BookShoppingCartMvcUI.Controllers
             {
                 return NotFound();
             }
-
             var genre = await _adminRepository.GetGenreByIdAsync(id.Value);
             if (genre == null)
             {
@@ -86,10 +86,10 @@ namespace BookShoppingCartMvcUI.Controllers
                 await _adminRepository.UpdateGenreAsync(genre);
                 return RedirectToAction(nameof(ManageGenres));
             }
-
             // If ModelState is not valid, return the view with the genreViewModel
             return View(genreViewModel);
         }
+
         // Now, for the book-related actions:
 
         public async Task<IActionResult> ManageBooks()
@@ -121,10 +121,9 @@ namespace BookShoppingCartMvcUI.Controllers
                     {
                         BookName = model.BookName,
                         AuthorName = model.AuthorName,
-                        Price = model.Price,                       
+                        Price = model.Price,
                         GenreId = model.GenreId
                     };
-
                     bool isSuccess = await _adminRepository.AddBookAsync(book);
                     if (isSuccess)
                     {
@@ -132,7 +131,7 @@ namespace BookShoppingCartMvcUI.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Failed to add the book. Please try again.");
+                        ModelState.AddModelError(string.Empty, "Failed to add the book. Please try again.");
                     }
                 }
             }
@@ -167,16 +166,7 @@ namespace BookShoppingCartMvcUI.Controllers
         public async Task<IActionResult> EditBook(BookViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                // Ensure the updated book does not conflict with existing books (excluding itself)
-                var bookExists = await _adminRepository.BookExistsAsync(model.BookName, model.AuthorName, model.GenreId, model.Id);
-                if (bookExists)
-                {
-                    ModelState.AddModelError("", "A book with the same name, author, and genre already exists.");
-                    ViewData["GenreId"] = new SelectList(await _adminRepository.GetAllGenresAsync(), "Id", "GenreName", model.GenreId);
-                    return View(model);
-                }
-
+            {                
                 var book = await _adminRepository.GetBookByIdAsync(model.Id);
                 if (book == null) return NotFound();
 

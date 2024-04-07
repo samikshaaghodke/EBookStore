@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-
 namespace BookShoppingCartMvcUI.Controllers
 {
     [Authorize]
@@ -22,7 +21,6 @@ namespace BookShoppingCartMvcUI.Controllers
         {
             try
             {
-
                 IEnumerable<Book> books = await _homeRepository.GetBooks(sterm, genreId);
                 IEnumerable<Genre> genres = await _homeRepository.Genres();
                 BookDisplayModel bookModel = new BookDisplayModel
@@ -49,7 +47,6 @@ namespace BookShoppingCartMvcUI.Controllers
         }
 
         //Handles errors in the application.
-
        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

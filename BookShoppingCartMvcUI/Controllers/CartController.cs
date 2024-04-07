@@ -15,7 +15,6 @@ namespace BookShoppingCartMvcUI.Controllers
             _logger = logger;
             _cartRepo = cartRepo;
         }
-
      
         public async Task<IActionResult> AddItem(int bookId, int qty = 1, int redirect = 0)
         {

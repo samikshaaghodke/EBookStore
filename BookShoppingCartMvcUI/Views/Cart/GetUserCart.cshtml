@@ -1,12 +1,12 @@
 ﻿@model ShoppingCart 
 @{
-    ViewData["Title"] = "GetUserCart";
+    ViewData["Title"] = "My Cart";
 }
 @* Bind model to View *@
 <div style="width:90%;margin:auto" class="mt-2">
     @if (Model != null && Model.CartDetails != null && Model.CartDetails.Count > 0)
     {
-        <h5>My Cart</h5>
+        <h5>@ViewData["Title"]</h5>
 
         <table class="table table-striped">
             <tr>

@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<Order>
-
+@{
+    ViewData["Title"] = "My Orders";
+}
 <div style="width:100%" class="mt-2">
     <a href="/Home/Index" class="btn btn-primary my-2">Back</a>
-
-    <h4>My Orders</h4>
+   
+    <h4>@ViewData["Title"]</h4>
     @if (Model != null && Model.Count() > 0)
     {
         <table class="table table-striped">
